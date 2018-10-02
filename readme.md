@@ -1,4 +1,4 @@
-![responsive apps android](responsivex.png)
+![responsive apps android](/responsivex.png)
 
 # KTUni
 

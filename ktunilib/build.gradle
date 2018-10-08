@@ -1,15 +1,35 @@
 apply plugin: 'com.android.library'
+/*
+    Copyright 2018 Fred Grott
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+
+def myconfigurations = rootProject.ext.configurations;
+def mylibraries = rootProject.ext.libraries;
+
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion "28.0.3"
+    compileSdkVersion myconfigurations.compileSdkVersion
+    buildToolsVersion myconfigurations.buildToolsVersion
 
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode rootProject.ext.gitVersionCode
-        versionName rootProject.ext.gitVersionName
+        minSdkVersion myconfigurations.minSdkVersion
+        targetSdkVersion myconfigurations.targetSdkVersion
+        versionCode rootProject.ext.myVersionCode
+        versionName rootProject.ext.myVersionName
+
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -17,6 +37,7 @@ android {
 
     buildTypes {
         release {
+            buildConfigField("String", "GIT_HASH", rootProject.ext.gitSha)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -28,7 +49,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    testImplementation "junit:junit:${rootProject.ext.junitVersion}"
-    androidTestImplementation "com.android.support.test:runner:${rootProject.ext.supportTestRunnerVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.ext.espressoCoreVersion}"
+    testImplementation "junit:junit:${mylibraries.junit}"
+    androidTestImplementation "com.android.support.test:runner:${mylibraries.supportTestRunnerVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${mylibraries.espressoCoreVersion}"
 }

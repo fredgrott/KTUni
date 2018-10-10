@@ -94,4 +94,5 @@ dependencies {
     testImplementation "junit:junit:${mylibraries.junit}"
     androidTestImplementation "com.android.support.test:runner:${mylibraries.supportTestRunnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${mylibraries.espressoCoreVersion}"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${mylibraries.mockitoKotlinVersion}"
 }

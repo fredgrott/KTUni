@@ -1,4 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+apply plugin: "com.diffplug.gradle.spotless"
+apply plugin: 'jacoco'
+
 /*
     Copyright 2018 Fred Grott
 
@@ -17,6 +22,15 @@ limitations under the License.
 
 def myconfigurations = rootProject.ext.configurations;
 def mylibraries = rootProject.ext.libraries;
+
+jacoco {
+    toolVersion = '0.8.0'
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
 
 
 android {
@@ -43,6 +57,39 @@ android {
         }
     }
 
+}
+detekt {
+    version = "1.0.0.RC8"
+    defaultProfile {
+        input = "$projectDir/src/main/java"
+        config = "$projectDir/default-detekt-config.yml"
+        filters = ".*/resources/.*,.*/tmp/.*"
+        output = "$projectDir/build/reports/detekt"
+        baseline = file("$projectDir/build/reports/baseline.xml")
+    }
+}
+spotless {
+    kotlin {
+        target '**/*.kt'
+        licenseHeaderFile "$rootDir/license.kt.txt"
+    }
+}
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = [ '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*' ]
+    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/kotlin"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ])
 }
 
 dependencies {

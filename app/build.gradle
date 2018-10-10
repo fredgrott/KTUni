@@ -95,4 +95,5 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:${mylibraries.supportTestRunnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${mylibraries.espressoCoreVersion}"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${mylibraries.mockitoKotlinVersion}"
+    testImplementation "org.amshove.kluent:kluent-android:${mylibraries.kluentAndroidVersion}"
 }

@@ -75,7 +75,8 @@ ext {
             junit:"4.12",
             supportTestRunnerVersion:"1.0.2",
             espressoCoreVersion:"3.0.2",
-            mockitoKotlinVersion: "2.0.0-RC3"
+            mockitoKotlinVersion: "2.0.0-RC3",
+            kluentAndroidVersion: "1.42"
     ]
 
     git = Grgit.open(currentDir: projectDir)

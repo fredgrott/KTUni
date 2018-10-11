@@ -7,6 +7,7 @@ apply plugin: "io.gitlab.arturbosch.detekt"
 
 apply plugin: "com.diffplug.gradle.spotless"
 apply plugin: 'jacoco'
+apply plugin: 'org.jetbrains.dokka-android'
 
 /*
     Copyright 2018 Fred Grott
@@ -85,6 +86,13 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
     executionData = fileTree(dir: project.buildDir, includes: [
             'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
     ])
+}
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+    jdkVersion = 6
+    includes = ['packages.md', 'extra.md']
+    cacheRoot = 'default'
 }
 
 

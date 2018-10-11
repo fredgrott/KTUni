@@ -7,6 +7,7 @@ apply plugin: "io.gitlab.arturbosch.detekt"
 
 apply plugin: "com.diffplug.gradle.spotless"
 apply plugin: 'jacoco'
+
 /*
     Copyright 2018 Fred Grott
 
@@ -40,8 +41,8 @@ android {
         applicationId myconfigurations.appIdName
         minSdkVersion myconfigurations.minSdkVersion
         targetSdkVersion myconfigurations.targetSdkVersion
-        versionCode rootProject.ext.myVersionCode
-        versionName rootProject.ext.myVersionName
+        versionCode rootProject.generateVersionCode()
+        versionName rootProject.generateVersionName()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

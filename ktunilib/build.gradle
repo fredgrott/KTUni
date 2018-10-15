@@ -22,8 +22,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-def myconfigurations = rootProject.ext.configurations;
-def mylibraries = rootProject.ext.libraries;
+def myconfigurations = rootProject.ext.configurations
+def mylibraries = rootProject.ext.libraries
+
+ext.versionMajor = 1
+ext.versionMinor = 0
+ext.versionPatch = 0
+ext.versionClassifier = null
+ext.isSnapshot = true
 
 jacoco {
     toolVersion = '0.8.0'
@@ -43,8 +49,8 @@ android {
     defaultConfig {
         minSdkVersion myconfigurations.minSdkVersion
         targetSdkVersion myconfigurations.targetSdkVersion
-        versionCode rootProject.generateVersionCode()
-        versionName rootProject.generateVersionName()
+        versionCode generateVersionCode()
+        versionName generateVersionName()
 
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -108,4 +114,20 @@ dependencies {
     testImplementation "junit:junit:${mylibraries.junit}"
     androidTestImplementation "com.android.support.test:runner:${mylibraries.supportTestRunnerVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${mylibraries.espressoCoreVersion}"
+}
+
+private Integer generateVersionCode() {
+    return  rootProject.ext.configurations.minSdkVersion*10000000 + ext.versionMajor * 10000 + ext.versionMinor * 100 + ext.versionPatch
+}
+
+private String generateVersionName() {
+    String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
+    if (ext.versionClassifier == null && ext.isSnapshot) {
+        ext.versionClassifier = "SNAPSHOT"
+    }
+
+    if (ext.versionClassifier != null) {
+        versionName += "-" + ext.versionClassifier
+    }
+    return versionName
 }

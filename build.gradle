@@ -57,11 +57,7 @@ task clean(type: Delete) {
 
 ext {
 
-    versionMajor = 1
-    versionMinor = 2
-    versionPatch = 3
-    versionClassifier = null
-    isSnapshot = true
+
 
     //static way of numberiong builds right now will change to dynamic later
 
@@ -102,18 +98,3 @@ ext {
     espressoCoreVersion = "3.0.2"
 }
 
-private Integer generateVersionCode() {
-    return  ext.configurations.minSdkVersion*10000000 + ext.versionMajor * 10000 + ext.versionMinor * 100 + ext.versionPatch
-}
-
-private String generateVersionName() {
-    String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
-    if (ext.versionClassifier == null && ext.isSnapshot) {
-        ext.versionClassifier = "SNAPSHOT"
-    }
-
-    if (ext.versionClassifier != null) {
-        versionName += "-" + ext.versionClassifier
-    }
-    return versionName;
-}

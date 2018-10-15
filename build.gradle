@@ -64,6 +64,7 @@ ext {
 
     configurations =[
                 appIdName: "io.github.shareme.ktuni",
+                apkName: "KTUnidemo",
                 compileSdkVersion: 28,
                 minSdkVersion: 21,
                 targetSdkVersion: 28,

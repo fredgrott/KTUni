@@ -129,3 +129,23 @@ private String generateVersionName() {
     }
     return versionName
 }
+android.applicationVariants.all { variant ->
+    println "*********" + variant.description + "**********";
+    def variants = variant.baseName.split("-");
+    def apkName = rootProject.ext.configurations.apkName
+    apkName += variants[0];
+    apkName += "-v" + android.defaultConfig.versionName;
+
+    if (variant.buildType.name == "release") {
+        apkName += "-RELEASE.apk";
+    } else {
+        apkName += "-SNAPSHOT.apk";
+    }
+    println "*********" + "$project.buildDir/apk/" + apkName + "**********";
+
+    variant.outputs.all {
+        outputFileName = "${apkName}.apk"
+    }
+
+    
+}
